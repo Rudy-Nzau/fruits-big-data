@@ -1,38 +1,103 @@
-# Fruits! - Big Data image processing pipeline on AWS
+#  Fruits! - Big Data Image Processing Pipeline (AWS EMR)
 
-Projet réalisé dans le cadre d'un cas AgriTech visant à construire une première chaîne de traitement Big Data pour des images de fruits.
+##  Contexte
 
-## Objectif
-Mettre en place un pipeline scalable capable de :
-- lire des images depuis Amazon S3
-- prétraiter les images
-- extraire des features avec MobileNetV2
-- diffuser les poids du modèle sur les workers Spark
-- réduire la dimension avec une PCA PySpark
-- sauvegarder les résultats sur S3
+Ce projet a été réalisé dans le cadre d’un cas d’usage pour la startup **Fruits!**, spécialisée en AgriTech.
 
-## Stack technique
+L’objectif est de construire une première **chaîne de traitement Big Data** permettant d’analyser des images de fruits afin de préparer un futur système de classification.
+
+---
+
+##  Objectifs
+
+- Charger des images depuis le cloud (Amazon S3)
+- Prétraiter les images
+- Extraire des caractéristiques visuelles via **MobileNetV2**
+- Distribuer les poids du modèle avec **Spark Broadcast**
+- Réduire la dimension des données avec une **PCA PySpark**
+- Stocker les résultats dans le cloud
+
+---
+
+##  Architecture
+
+S3 (images)
+↓
+Spark / EMR
+↓
+Preprocessing
+↓
+MobileNetV2 (feature extraction)
+↓
+Broadcast des poids
+↓
+PCA (réduction dimension)
+↓
+S3 (résultats)
+
+
+---
+
+##  Stack technique
+
 - Python
 - PySpark
 - TensorFlow / Keras
 - AWS S3
 - AWS EMR
-- Spark ML PCA
+- Spark ML (PCA)
+
+---
 
 ## Structure du projet
-- `notebooks/` : notebook principal
-- `scripts/` : scripts utilitaires, dont bootstrap EMR
-- `docs/` : documentation architecture et AWS
-- `reports/` : présentation et figures
-- `deliverables/` : livrables officiels
+
+notebooks/ → notebook principal
+scripts/ → scripts utilitaires (bootstrap EMR)
+docs/ → documentation technique
+reports/ → présentation + figures
+deliverables/ → livrables officiels
+
+
+---
 
 ## Pipeline
-S3 -> lecture des images -> preprocessing -> MobileNetV2 -> features -> PCA -> S3
 
-## Livrables
-- notebook PySpark
-- données / résultats
-- support de présentation
+1. Lecture des images depuis S3
+2. Préprocessing (resize, normalisation)
+3. Extraction de features avec MobileNetV2
+4. Distribution du modèle via broadcast Spark
+5. Réduction de dimension (PCA)
+6. Sauvegarde sur S3
 
-## Remarques
-Le projet met l'accent sur la scalabilité et l'architecture Big Data plutôt que sur l'entraînement d'un modèle final.
+---
+
+## Résultats
+
+Chaque image est transformée en :
+- un label
+- un vecteur de caractéristiques réduit
+
+Format de sortie : **Parquet**
+
+---
+
+## Limites
+
+- coût du cluster EMR
+- complexité de configuration cloud
+- perte d’information possible avec PCA
+
+---
+
+## Améliorations possibles
+
+- optimisation du nombre de composantes PCA
+- ajout de monitoring
+- gestion avancée des erreurs images
+- migration vers Databricks
+
+---
+
+##  Auteur
+
+Rudy Nzau
