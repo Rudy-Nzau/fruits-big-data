@@ -1,0 +1,7 @@
+pandas
+numpy
+pillow
+tensorflow
+pyspark
+pyarrow
+jupyter
